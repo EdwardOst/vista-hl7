@@ -6,13 +6,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <parent>
-        <groupId>com.talend.se.platform</groupId>
-        <artifactId>tesb</artifactId>
-        <version>5.2.2-SNAPSHOT</version>
-        <relativePath>../../platform/talend/tesb/pom.xml</relativePath>
-    </parent>
-
     <name>openmash-parent</name>
     <description>Profiles shared by all Talend SE demos</description>
 
@@ -30,6 +23,14 @@
     </distributionManagement>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <tesb.version>5.2.2</tesb.version>
+        <cxf.version>2.7.3</cxf.version>
+        <camel.version>2.10.2</camel.version>
+        <activemq.version>5.7.0</activemq.version>
+        <karaf.version>2.2.9</karaf.version>
+        
         <!-- default to local nexus repo, see profiles for EC2 and VA settings -->
         <distributionManagement.repository.url>http://localhost:8081/nexus/content/repositories/releases/</distributionManagement.repository.url>
         <distributionManagement.snapshotRepository.url>http://localhost:8081/nexus/content/repositories/snapshots/</distributionManagement.snapshotRepository.url>
@@ -57,7 +58,31 @@
             org.slf4j.*;version="[1.6,2)"
         </vista.osgi.imports>
         <vista.osgi.import.default.version>[$(version;==;$(@)),$(version;+;$(@)))</vista.osgi.import.default.version>    
+
+        <!-- build plugin versions -->
+        <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
+        <felix.version>2.3.7</felix.version>
+        <maven-bundle-plugin.version>2.3.7</maven-bundle-plugin.version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version> 
+        <maven-war-plugin.version>2.3</maven-war-plugin.version>
+
+        <!-- additiona build and test tools -->
+        <jetty-maven-plugin.version>${jetty.version}</jetty-maven-plugin.version>
+        <tomcat-maven-plugin.version>2.1</tomcat-maven-plugin.version>
+
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.talend.se.platform</groupId>
+                <artifactId>tesb</artifactId>
+                <version>${tesb.version}-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -229,20 +254,8 @@
                 <configuration>
                     <systemProperties>
                         <systemProperty>
-                            <key>container</key>
-                            <value>spring</value>
-                        </systemProperty>
-                        <systemProperty>
                             <key>containerConfig</key>
                             <value>container.xml</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <key>app-properties</key>
-                            <value>${app-properties}</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <key>container-properties</key>
-                            <value>springContainer.properties</value>
                         </systemProperty>
                     </systemProperties>
                 </configuration>
@@ -250,12 +263,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <!-- unit tests are always done in spring container -->
+                <!-- unit tests are always use the spring config -->
                 <configuration>
                     <systemPropertyVariables>
                         <container>${container}</container>
-                        <app-properties>${app-properties}</app-properties>
-                        <container-properties>${container-properties}</container-properties>
                         <containerConfig>container.xml</containerConfig>
                     </systemPropertyVariables>
                 </configuration>

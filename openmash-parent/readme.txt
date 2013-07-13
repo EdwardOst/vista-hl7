@@ -18,9 +18,18 @@ addition, there must be an application properties file following the convention
 <artifactId>.properties.
 
 The actual properties "contract" is specified in the 
-src/main/resources/container.properties file.  This is really a template that 
-is instantiated by Maven filters with platform specific properties from the 
-platform specific container properties mentioned earlier.  
+src/main/resources/container.properties file.  This template is instantiated by
+Maven filters with platform specific properties.  The platform specific property
+files are located in the project root directory, e.g. springContainer.properties
+and karafContainer.properties.
 
-Platform specific container property files are located in the project root 
-directory, e.g. springContainer.properties and karafContainer.properties.
+When unit tests are run the surefire plugin is configured to use the
+spring container container.xml via the containerConfig system property.  However, 
+it is still the target platform's properties that are being applied.  These can
+be overridden via the container.test.properties.
+
+Likewise, the  camel-maven-bundle plugin is configured to use the spring container
+via the same containerConfig system property.  However, the platform properties
+will still be applied.
+
+
