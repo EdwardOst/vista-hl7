@@ -33,7 +33,7 @@ on how to build and compile it.
 Steps
 To build this code, run unit tests, and create an OSGI bundle use the command
 below.  Note that since this is an integration module, the "unit" tests will
-need to connect to a local activemq server as well Mirth.  In addition, if
+need to connect to a local activemq server as well as Mirth.  In addition, if
 building in the same environment with other similar routes on other machines,
 be sure that their consumers on ActiveMQ do not interfere with this routes or
 unit tests may fail (false positive).

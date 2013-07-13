@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.talend.se.demo.vista.openmash.hl7mediator.Hl7MediatorTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.654 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.773 sec
